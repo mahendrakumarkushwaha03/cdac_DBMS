@@ -1,0 +1,98 @@
+use emp;
+show databases;
+use employeedb;
+show tables; 
+select* from emp;
+
+drop table emp;
+
+
+
+
+create table EMP (
+  EMPNO Int(4) not null,
+  ENAME varchar(10) ,
+  JOB varchar(9) ,
+  MGR Int(4) ,
+  HIREDATE date ,
+  SAL Double(7, 2) ,
+  COMM Double(7, 2) ,
+  DEPTNO Double(2, 0) 
+);
+
+insert into EMP values (7698,'BLAKE', 'MANAGER', 7839,    str_to_date('1-MAY-81','%d-%b-%Y'),    2850, null, 30);
+INSERT INTO EMP VALUES
+        (7782, 'CLARK',  'MANAGER',   7839,
+        STR_TO_DATE('9-JUN-1981', '%d-%b-%Y'),  2450, NULL, 10);
+INSERT INTO EMP VALUES
+        (7788, 'SCOTT',  'ANALYST',   7566,
+        STR_TO_DATE('09-DEC-1982', '%d-%b-%Y'), 3000, NULL, 20);
+INSERT INTO EMP VALUES
+        (7839, 'KING',   'PRESIDENT', NULL,
+        STR_TO_DATE('17-NOV-1981', '%d-%b-%Y'), 5000, NULL, 10);
+INSERT INTO EMP VALUES
+        (7844, 'TURNER', 'SALESMAN',  7698,
+        STR_TO_DATE('8-SEP-1981', '%d-%b-%Y'),  1500,    0, 30);
+INSERT INTO EMP VALUES
+        (7876, 'ADAMS',  'CLERK',     7788,
+        STR_TO_DATE('12-JAN-1983', '%d-%b-%Y'), 1100, NULL, 20);
+INSERT INTO EMP VALUES
+        (7900, 'JAMES',  'CLERK',     7698,
+        STR_TO_DATE('3-DEC-1981', '%d-%b-%Y'),   950, NULL, 30);
+INSERT INTO EMP VALUES
+        (7902, 'FORD',   'ANALYST',   7566,
+        STR_TO_DATE('3-DEC-1981', '%d-%b-%Y'),  3000, NULL, 20);
+INSERT INTO EMP VALUES
+        (7934, 'MILLER', 'CLERK',     7782,
+        STR_TO_DATE('23-JAN-1982', '%d-%b-%Y'), 1300, NULL, 10);
+
+
+
+
+create table DEPT (
+  DEPTNO Int(2) null,
+  DNAME varchar(14) null,
+  LOC varchar(13) null
+);
+
+INSERT INTO DEPT VALUES (10, 'ACCOUNTING', 'NEW YORK');
+INSERT INTO DEPT VALUES (20, 'RESEARCH',   'DALLAS');
+INSERT INTO DEPT VALUES (30, 'SALES',      'CHICAGO');
+INSERT INTO DEPT VALUES (40, 'OPERATIONS', 'BOSTON');
+
+
+
+select* from emp;
+select* from rtu;
+
+#GROUPBY - Employee Database 1
+select sum(sal) as t_sal, max(sal) as max_sal, min(sal), count(*) as total_no from emp group by deptno having deptno != 10;
+#GROUPBY - Employee Database 2
+select deptno, count(*) as TotalDepart from emp group by deptno having count(*) > 4;
+#GROUPBY - Employee Database 3
+select job, avg(sal) as AvgSal from emp group by Job having AvgSal >2000 order by job DESC;
+#GROUPBY - Employee Database 4
+select mgr as manager_id, count(*) as employees from emp where mgr is not null group by manager_id order by mgr asc;
+#GROUPBY - Employee Database 5
+select  mgr,  min(sal) as min_sal from emp group by mgr having mgr is not null and min(sal)>800 order by min_sal desc;
+
+#GROUPBY - RTU Database 1
+
+USE RTUDB;
+SELECT SENSOR_TYPE, COUNT(SENSOR_TYPE) AS COUNT FROM SENSORS GROUP BY SENSOR_TYPE;
+
+#GROUPBY - RTU Database 2
+SELECT STATUS, COUNT(STATUS) AS c_STAUS FROM SENSORS GROUP BY STATUS;
+
+#GROUPBY - RTU Database 3
+SELECT SENSOR_TYPE, COUNT(SENSOR_TYPE) AS c_COUNT FROM SENSORS GROUP BY SENSOR_TYPE;
+
+#GROUPBY - RTU Database 4
+SELECT U.USER_ID, COUNT(S.SENSOR_ID) AS T_SENSORS FROM USERS U JOIN CONTROLLER C
+ON  U.USER_ID=c.USER_ID JOIN SENSORS S ON C.SENSOR_ID = S.SENSOR_ID GROUP BY U.USER_ID HAVING T_SENSORS>3 AND U.USER_ID !=503
+ORDER BY U.USER_ID DESC;
+
+
+
+
+
